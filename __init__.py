@@ -1,1 +1,1 @@
-from MesaFileHandler import *
+from .MesaFileHandler import *
