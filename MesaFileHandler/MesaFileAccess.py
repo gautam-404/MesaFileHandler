@@ -1,7 +1,7 @@
 import re
 from collections import OrderedDict
 
-from support import *
+from .support import *
 from .MesaFileInterface import IMesaInterface
 from .MesaEnvironmentHandler import MesaEnvironmentHandler
 
