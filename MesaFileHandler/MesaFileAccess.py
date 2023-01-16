@@ -1,9 +1,9 @@
 import re
 from collections import OrderedDict
 
-from MesaHandler.support import *
-from MesaHandler.MesaFileHandler.MesaFileInterface import IMesaInterface
-from MesaHandler.MesaFileHandler.MesaEnvironmentHandler import MesaEnvironmentHandler
+from support import *
+from MesaFileInterface import IMesaInterface
+from MesaEnvironmentHandler import MesaEnvironmentHandler
 
 
 class MesaFileAccess(IMesaInterface):
@@ -36,7 +36,7 @@ class MesaFileAccess(IMesaInterface):
 
     def __setitem__(self, key, value):
         for section in sections:
-            for file,parameteDict in self.dataDict[section].items():
+            for file, parameteDict in self.dataDict[section].items():
                 if key in parameteDict.keys():
                     self.dataDict[section][file][key] = value
                     regex = r"(" + key + r".+=)\s* ([\.\w_\d']+)"
@@ -44,19 +44,19 @@ class MesaFileAccess(IMesaInterface):
                     self.rewriteFile(file,regex,substring)
                     return
 
-    def rewriteFile(self,file,regex,substring):
+    def rewriteFile(self, file, regex, substring):
         content = self.readFile(file)
 
         p = re.compile(regex)
-        content = p.sub(substring,content)
+        content = p.sub(substring, content)
 
-        self.writeFile(file,content)
+        self.writeFile(file, content)
 
-    def addValue(self,key,value=None):
-        section,parmValue = self.envObject.checkParameter(key,value)
+    def addValue(self, key, value=None):
+        section,parmValue = self.envObject.checkParameter(key, value)
 
         if section == "":
-            raise KeyError("The parameter "+key+" is not available through Mesa. Please add it to the defaults list,"
+            raise KeyError(f"The parameter {key} is not available through Mesa. Please add it to the defaults list,"
                                                   "before adding it to the inlist files")
 
         parmValue = parmValue if value is None else value
@@ -77,15 +77,15 @@ class MesaFileAccess(IMesaInterface):
             self.dataDict[section][usedFile][key] = parmValue
 
 
-    def removeValue(self,key):
+    def removeValue(self, key):
         section,_ = self.envObject.checkParameter(key)
 
         if section == "":
-            raise KeyError("The parameter "+key+" is not available through Mesa. Please add it to the defaults list,"
+            raise KeyError(f"The parameter {key} is not available through Mesa. Please add it to the defaults list,"
                                                   "before adding it to the inlist files")
 
         if section not in sections:
-            raise ValueError("Mesa says section for parameter "+key+" is "+section+". This section is not in the "
+            raise ValueError(f"Mesa says section for parameter {key} is {section}. This section is not in the "
                                                                                    "Sections read by this code")
 
         for file, parameteDict in self.dataDict[section].items():
@@ -93,7 +93,7 @@ class MesaFileAccess(IMesaInterface):
                 del self.dataDict[section][file][key]
                 regex = r"\s"+key+".+"
                 substring = ""
-                self.rewriteFile(file,regex,substring)
+                self.rewriteFile(file, regex, substring)
 
 
 
