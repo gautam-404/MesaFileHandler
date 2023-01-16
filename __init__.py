@@ -1,2 +1,2 @@
-from MesaFileHandler.MesaFileHandler.MesaEnvironmentHandler import *
-from MesaFileHandler.MesaFileHandler.MesaAccess import *
+from MesaFileHandler.MesaEnvironmentHandler import *
+from MesaFileHandler.MesaAccess import *
