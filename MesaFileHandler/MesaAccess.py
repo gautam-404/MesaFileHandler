@@ -1,4 +1,4 @@
-import MesaFileAccess
+from .MesaFileAccess import *
 from support import *
 
 from collections import OrderedDict
