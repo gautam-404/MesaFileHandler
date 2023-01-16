@@ -1,6 +1,6 @@
 import os
 
-from support import *
+from .support import *
 from .MesaFileInterface import IMesaInterface
 
 class MesaEnvironmentHandler(IMesaInterface):
